@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities | Outdoor Living Centre</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="title">Outdoor Living Centre</h1>
+        <nav class="pages">
+            <div class="logo"><a href="index.html" aria-label="Home"><img src="assets/logo.svg" alt="Outdoor Living Centre logo"></a></div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="OLCaccomodations.html">Accommodations</a></li>
+                <li class="active"><a href="OLCactivities.html">Activities</a></li>
+                <li><a href="OLCnewsAndEvents.html">News & Events</a></li>
+                <li><a href="OLCcontact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="OLCbooking.html" class="cta-button">Book Now</a>
+    </header>
+
+    <main id="root">
+        <section class="page-header">
+            <h2>Nature Pursuits & Resort Facilities</h2>
+            <p>Explore the top-notch outdoor recreation and wellness activities available during your serene escape.</p>
+        </section>
+
+        <div class="activities-layout">
+            
+            <aside class="filter-sidebar">
+                <h3>Filter Activities</h3>
+                <input type="search" placeholder="Search by keyword..." class="search-input" id="activitySearch" aria-label="Search activities by keyword">
+                <div class="filter-group">
+                    <h4>Category</h4>
+                    <label><input type="checkbox" name="category" value="adventure" id="cat-adventure"> Adventure</label>
+                    <label><input type="checkbox" name="category" value="wellness" id="cat-wellness"> Wellness</label>
+                    <label><input type="checkbox" name="category" value="trails" id="cat-trails"> Trails (Dirt Bike)</label>
+                    <label><input type="checkbox" name="category" value="water" id="cat-water"> Water Sports</label>
+                </div>
+                <div id="filterStatus" class="sr-only" aria-live="polite"></div>
+            </aside>
+            
+            <section class="activity-grid">
+                <div class="card activity-card">
+                    <img src="assets/dirtbike.jpg" alt="Dirt Bike Trails">
+                    <h4>Dirt Bike Trails</h4>
+                    <p>Explore miles of rugged terrain on our maintained, private trails. Beginner and expert routes available.</p>
+                    <div class="time-options">
+                        <select class="time-select" onchange="bookActivity('Dirt Bike Trails', this.value)" aria-label="Select time for Dirt Bike Trails">
+                            <option value="">Select a time...</option>
+                            <option value="09:00">09:00 (Morning)</option>
+                            <option value="12:00">12:00 (Noon)</option>
+                            <option value="19:00">19:00 (Night)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card activity-card">
+                    <img src="assets/yoga.jpeg" alt="Outdoor Yoga">
+                    <h4>Riverside Yoga</h4>
+                    <p>Start your day with a guided vinyasa class by the river, focused on relaxation and rejuvenation.</p>
+                    <div class="time-options">
+                        <select class="time-select" onchange="bookActivity('Riverside Yoga', this.value)" aria-label="Select time for Riverside Yoga">
+                            <option value="">Select a time...</option>
+                            <option value="09:00">09:00 (Morning)</option>
+                            <option value="12:00">12:00 (Noon)</option>
+                            <option value="19:00">19:00 (Night)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card activity-card">
+                    <img src="assets/kayaking.jpg" alt="Kayaking on the Lake">
+                    <h4>Kayaking on the Lake</h4>
+                    <p>Paddle through serene waters and take in the stunning natural surroundings with our guided kayaking tours.</p>
+                    <div class="time-options">
+                        <select class="time-select" onchange="bookActivity('Kayaking on the Lake', this.value)" aria-label="Select time for Kayaking on the Lake">
+                            <option value="">Select a time...</option>
+                            <option value="09:00">09:00 (Morning)</option>
+                            <option value="12:00">12:00 (Noon)</option>
+                            <option value="19:00">19:00 (Night)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card activity-card">
+                    <img src="assets/trailrun.jpg" alt="Guided Trail Runs">
+                    <h4>Guided Trail Runs</h4>
+                    <p>Join our expert guides for invigorating trail runs suitable for all fitness levels amidst beautiful scenery.</p>
+                    <div class="time-options">
+                        <select class="time-select" onchange="bookActivity('Guided Trail Runs', this.value)" aria-label="Select time for Guided Trail Runs">
+                            <option value="">Select a time...</option>
+                            <option value="09:00">09:00 (Morning)</option>
+                            <option value="12:00">12:00 (Noon)</option>
+                            <option value="19:00">19:00 (Night)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card activity-card">
+                    <img src="assets/meditation.jpeg" alt="Guided Meditation Sessions">
+                    <h4>Guided Meditation Sessions</h4>
+                    <p>Find your inner peace with our outdoor meditation sessions led by experienced instructors.</p>
+                    <div class="time-options">
+                        <select class="time-select" onchange="bookActivity('Guided Meditation Sessions', this.value)" aria-label="Select time for Guided Meditation Sessions">
+                            <option value="">Select a time...</option>
+                            <option value="09:00">09:00 (Morning)</option>
+                            <option value="12:00">12:00 (Noon)</option>
+                            <option value="19:00">19:00 (Night)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card activity-card">
+                    <img src="assets/paddleboarding.jpg" alt="Stand-Up Paddleboarding">
+                    <h4>Stand-Up Paddleboarding</h4>
+                    <p>Enjoy a fun and relaxing paddleboarding experience on our calm lake waters, perfect for all skill levels.</p>
+                    <div class="time-options">
+                        <select class="time-select" onchange="bookActivity('Stand-Up Paddleboarding', this.value)" aria-label="Select time for Stand-Up Paddleboarding">
+                            <option value="">Select a time...</option>
+                            <option value="09:00">09:00 (Morning)</option>
+                            <option value="12:00">12:00 (Noon)</option>
+                            <option value="19:00">19:00 (Night)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card activity-card">
+                    <img src="assets/naturewalk.jpg" alt="Guided Nature Walks">
+                    <h4>Guided Nature Walks</h4>
+                    <p>Discover the local flora and fauna with our knowledgeable guides on peaceful nature walks.</p>
+                    <div class="time-options">
+                        <select class="time-select" onchange="bookActivity('Guided Nature Walks', this.value)" aria-label="Select time for Guided Nature Walks">
+                            <option value="">Select a time...</option>
+                            <option value="09:00">09:00 (Morning)</option>
+                            <option value="12:00">12:00 (Noon)</option>
+                            <option value="19:00">19:00 (Night)</option>
+                        </select>
+                    </div>
+                </div>
+
+            </section>
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Outdoor Living Centre. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Store a small booking object in sessionStorage and navigate to booking page
+        function bookActivity(activity, time) {
+            const bookingData = {
+                source: 'activity',
+                activity: activity,
+                time: time || '',
+                // leave date/guests blank for the user to choose on the booking page
+                date: '',
+                guests: 1
+            };
+            try {
+                sessionStorage.setItem('bookingData', JSON.stringify(bookingData));
+            } catch (e) {
+                console.error('Could not store bookingData', e);
+            }
+            // Navigate to booking page (no query string so booking page reads sessionStorage)
+            window.location.href = 'OLCbooking.html';
+        }
+
+        // Activity filter logic
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('activitySearch');
+            const categoryInputs = Array.from(document.querySelectorAll('input[name="category"]'));
+            const cards = Array.from(document.querySelectorAll('.activity-card'));
+            const filterStatus = document.getElementById('filterStatus');
+
+            // Map card to keywords and categories
+            const cardMeta = cards.map(card => {
+                const title = (card.querySelector('h4')?.textContent || '').toLowerCase();
+                const desc = (card.querySelector('p')?.textContent || '').toLowerCase();
+                const keywords = (title + ' ' + desc).replace(/[^a-z0-9 ]/gi, '');
+                // Assign categories by keyword (customize as needed)
+                let cats = [];
+                if (/dirt|bike|trail/.test(keywords)) cats.push('trails','adventure');
+                if (/yoga|meditation|wellness/.test(keywords)) cats.push('wellness');
+                if (/kayak|paddle|water/.test(keywords)) cats.push('water','adventure');
+                if (/nature|walk|run/.test(keywords)) cats.push('adventure');
+                return { card, keywords, cats };
+            });
+
+            function updateFilter() {
+                const search = (searchInput.value || '').toLowerCase().trim();
+                const activeCats = categoryInputs.filter(c => c.checked).map(c => c.value);
+                let shown = 0;
+                cardMeta.forEach(({card, keywords, cats}) => {
+                    let match = true;
+                    if (search && !keywords.includes(search)) match = false;
+                    if (activeCats.length && !activeCats.some(cat => cats.includes(cat))) match = false;
+                    card.style.display = match ? '' : 'none';
+                    if (match) shown++;
+                });
+                if (filterStatus) {
+                    filterStatus.textContent = shown === cards.length ? '' : `${shown} activities match your filter.`;
+                }
+            }
+
+            searchInput.addEventListener('input', updateFilter);
+            categoryInputs.forEach(c => c.addEventListener('change', updateFilter));
+        });
+    </script>
+
+    <script src="assets/bundle.js"></script>
+
+        <script>
+                    if (window.__OLC_AUTOMATED_TEST && window.__OLC_AUTOMATED_TEST_PAGE === 'activities') {
+                        var s = document.createElement('script'); s.src = 'assets/activitiesTest.js'; document.body.appendChild(s);
+                    }
+        </script>
+</body>
+</html>

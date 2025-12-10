@@ -1,0 +1,673 @@
+/* Booking form success message styling */
+.booking-success-message {
+    color: #207a2b;
+    font-weight: bold;
+    font-size: 1.1em;
+    background: #e6ffe6;
+    border: 1px solid #b2e6b2;
+    padding: 0.75em 1em;
+    border-radius: 5px;
+    margin-top: 1em;
+}
+/* Booking form error message styling */
+.booking-error-message {
+    color: #c00;
+    font-weight: bold;
+}
+/* --- Global Styles & Theme Setup --- */
+
+.logo img {
+    height: 120px; /* Increased logo size */
+    max-height: 150px; 
+    width: auto; 
+    display: block;
+}
+
+/* A luxurious font stack */
+body {
+    font-family: 'Georgia', serif; /* Elegant, readable serif font */
+    color: #333; /* Dark earth tone for primary text */
+    background-color: #F8F8F4; /* Light off-white/cream for a paper-like, natural background */
+    margin: 0; 
+    line-height: 1.6;
+}
+
+/* Headings should be bold and clear */
+h1, h2, h3 {
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Modern, clean sans-serif for titles */
+    color: #2D543B; /* Deep forest green for contrast */
+    margin-top: 0;
+}
+
+/* --- Header & Navigation (Wireframe 1) --- */
+
+header {
+    background-color: #d3ff8c; /* White background for the sticky header */
+    border-bottom: 1px solid #E0E0E0; /* Subtle line to define the header */
+    padding: 15px 5%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Space out the title, navigation, and CTA */
+    align-items: center;
+    /* Styles for a 'sticky' to stay at the top of the page*/
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.title {
+    font-size: 1.8em;
+    font-weight: 700;
+    width: 100%;
+}
+
+.pages ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.pages {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.pages .logo {
+    display: flex;
+    align-items: center;
+    margin-right: 12px;
+}
+.pages .logo img { display: block; height: 50px; width: auto; }
+
+/* Logo styling when it's outside the nav (homepage only) */
+header > .logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+header > .logo img { height: 120px; }
+
+.pages li {
+    margin: 0 15px;
+}
+
+.pages a {
+    text-decoration: none;
+    color: #333; /* Default text colour */
+    font-weight: 500;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.pages a:hover {
+    color: #9C7D52; /* Soft gold/tan colour on hover to fit the luxurious theme */
+    
+}
+#background-image-container {
+    /* 1. Set the image file path */
+    background-image: url('assets/background-landscape.png');
+    
+    /* 2. Control image position and visibility */
+    
+    /* Ensures the image fills the entire container, cropping if necessary. */
+    background-size: cover; 
+    
+    /* Centers the image within the container. */
+    background-position: center center; 
+    
+    /* Prevents the image from tiling/repeating if it's too small. */
+    background-repeat: no-repeat; 
+    
+    /* 3. Essential for Content Display */
+    
+    /* Defines the minimum height of the container to ensure the image is fully visible. 
+       Use a value like 100vh for full viewport height or a fixed pixel value. */
+    min-height: 500px; 
+    
+    /* Optional: Add padding inside the container to push content away from the edges. */
+    padding: 50px; 
+}
+
+/* Optional: Ensure text is readable */
+#background-image-container h2,
+#background-image-container p {
+    color: white; /* Change text color for readability */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Adds shadow to make text pop */
+}
+/* --- Active Navigation Link Style --- */
+
+/* For the anchor tag inside the list item with the 'active' class */
+.pages li.active a {
+    color: #2D543B; /* Deep Forest Green (like headings) */
+    font-weight: 700; /* Bolder font weight */
+    /* Underline style to clearly mark the active page */
+    border-bottom: 2px solid #9C7D52; /* Soft Gold underline */
+    padding-bottom: 2px;
+}
+
+/* Optional: Prevent the hover effect from overriding the active style */
+.pages li.active a:hover {
+    color: #2D543B; 
+}
+
+/* --- Primary Call-to-Action (CTA) Button --- */
+
+.cta-button {
+    text-decoration: none;
+    background-color: #5C8C67; /* Muted olive/sage green for a natural, inviting look */
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.1s;
+    white-space: nowrap; /* Ensures the text stays on one line */
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #2D543B; /* Darker forest green on hover */
+    transform: translateY(-2px);
+}
+
+.cta-button:disabled,
+.cta-button.unavailable {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+}
+
+.cta-button:disabled:hover,
+.cta-button.unavailable:hover {
+    background-color: #ccc;
+    transform: none;
+}
+
+/* --- Main Content Area --- */
+
+main {
+    padding: 0;
+    max-width: 1200px; /* Constrain content width for better readability */
+    margin: 0 auto;
+}
+
+/* --- Hero Section (From Wireframe 1 for homepage) --- */
+
+.hero-split {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.hero-left {
+    flex: 1;
+    padding: 20px;
+}
+
+.hero-right {
+    flex: 1;
+    min-width: 0;
+}
+
+.hero-right img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+}
+
+.hero-section {
+    background-image: url('assets/placeholder-hero.jpg'); /* Placeholder: Replace with a high-res resort photo */
+    background-size: cover;
+    background-position: center;
+    height: 60vh; /* Takes up 60% of the viewport height */
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF; /* White text over the image */
+    padding: 20px;
+    position: relative;
+    /* Subtle dark overlay for readability */
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.4); 
+}
+
+.hero-section h2 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #FFFFFF; /* Override h2 green to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for legibility */
+}
+
+.hero-section p {
+    font-size: 1.2em;
+    margin-bottom: 25px;
+}
+
+.booking-search input, .booking-search button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    margin: 5px;
+    font-size: 1em;
+}
+
+.booking-search button {
+    background-color: #9C7D52; /* Soft gold/tan for the search button */
+    color: white;
+}
+
+/* --- Footer --- */
+
+footer {
+    background-color: #2D543B; /* Deep forest green from the header text */
+    color: #F8F8F4;
+    text-align: center;
+    padding: 20px 5%;
+    margin-top: 40px;
+    font-size: 0.9em;
+}
+
+/* --- Utility Classes (for use on Accommodations/Activities pages) --- */
+
+/* Style for individual content blocks/cards*/
+.card {
+    display: inline-block; /* means they can display beside each other*/
+    vertical-align: top; /* Prevents alignment issues */
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+    width: 48%;
+    border: 1px solid #EAEADF; /* Very light border */
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Image styles */
+.card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Slightly rounded corners for a soft look */
+}
+
+/* Availability badges for the accommodations */
+.availability-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0.75rem 0;
+    color: #fff;
+}
+.availability-badge.available { background: #22863a; } /* green */
+.availability-badge.unavailable { background: #6b7280; } /* grey */
+
+/* Activities grid and image sizing: make images consistent height and crop with object-fit */
+.activity-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.activity-card {
+    width: calc(33.333% - 13.333px); /* three columns with gaps */
+    box-sizing: border-box;
+}
+.activity-card img {
+    width: 100%;
+    height: 220px; /* consistent visual height */
+    object-fit: cover; /* crop to fill */
+    display: block;
+    border-radius: 8px;
+}
+
+/* Time options styling for activities */
+.time-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.time-btn {
+    flex: 1;
+    min-width: 70px;
+    padding: 8px 12px;
+    background-color: #5C8C67;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    font-size: 0.9em;
+}
+
+.time-btn:hover {
+    background-color: #2D543B;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 2vw 6px 2vw;
+    min-height: unset;
+  }
+  .title {
+    font-size: 1.1em;
+    margin-bottom: 0;
+    width: auto;
+    text-align: left;
+    padding: 0.2em 0.5em 0.2em 0;
+    flex: 0 0 auto;
+  }
+  .pages {
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    margin-bottom: 0;
+    flex: 1 1 auto;
+  }
+  .pages ul {
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    gap: 0.2em;
+    padding: 0;
+    margin: 0;
+  }
+  .pages li {
+    margin: 0 0.3em;
+    text-align: left;
+    display: inline-block;
+  }
+  .cta-button {
+    width: auto;
+    margin: 0 0 0 0.5em;
+    font-size: 0.98em;
+    padding: 8px 16px;
+    flex: 0 0 auto;
+  }
+  .pages .logo img, .logo img {
+    height: 32px;
+    max-height: 36px;
+    margin: 0 0.5em 0 0;
+  }
+  .pages .logo {
+    order: -1;
+    margin: 0 0.5em 0 0;
+    align-items: center;
+    display: flex;
+  }
+}
+@media (max-width: 600px) {
+  header {
+    padding: 2px 1vw 2px 1vw;
+  }
+  .title {
+    font-size: 0.98em;
+    padding: 0.1em 0.3em 0.1em 0;
+  }
+  .pages .logo img, .logo img {
+    height: 24px;
+    max-height: 28px;
+  }
+  .cta-button {
+    font-size: 0.95em;
+    padding: 7px 10px;
+  }
+  .pages .logo {
+    order: -1;
+    margin: 0 0.2em 0 0;
+    align-items: center;
+    display: flex;
+  }
+  .pages .logo {
+    display: none !important;
+  }
+}
+
+/* Very small screens: reduce logo a little more */
+@media (max-width: 360px) {
+    .pages .logo img, .logo img { height: 34px; }
+    
+    /* Homepage logo on very small screens */
+    header > .logo img { height: 60px; }
+}
+
+.social-icon {
+    width: 32px;
+    height: 32px;
+    margin: 0 8px;
+    vertical-align: middle;
+}
+
+.social-credits {
+    display: block;
+    font-size: 0.75em;
+    color: #ccc;
+    margin-top: 4px;
+}
+.social-links {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Booking page card styling - Green/Nature Theme */
+.accommodation-form {
+  background: linear-gradient(135deg, #eafaf1 0%, #f6fff6 100%);
+  border: 1.5px solid #b7e2c1;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px #2d543b18;
+  padding: 2em 1.5em;
+  max-width: 500px;
+  margin: 2em auto;
+}
+.accommodation-form h3 {
+  margin-top: 0;
+  margin-bottom: 1.2em;
+  font-size: 1.6em;
+  color: #2d543b;
+  text-align: left;
+  letter-spacing: 0.02em;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+}
+.accommodation-form label {
+  font-weight: 600;
+  color: #3a6b4b;
+}
+.accommodation-form select,
+.accommodation-form input[type="date"],
+.accommodation-form input[type="number"] {
+  width: 100%;
+  padding: 0.5em;
+  border-radius: 7px;
+  border: 1.5px solid #b7e2c1;
+  margin-top: 0.3em;
+  box-sizing: border-box;
+  background: #f6fff6;
+  color: #2d543b;
+  font-size: 1em;
+  transition: border-color 0.2s;
+}
+.accommodation-form select:focus,
+.accommodation-form input[type="date"]:focus,
+.accommodation-form input[type="number"]:focus {
+  border-color: #5c8c67;
+  outline: none;
+}
+.accommodation-form .field-error {
+  margin-bottom: 0.5rem;
+  color: #b94a48;
+}
+.accommodation-form .field-help {
+  color: #4a5a7e;
+  font-size: 0.95em;
+  margin-bottom: 0.5em;
+}
+.accommodation-form .cta-button {
+  width: 100%;
+  font-size: 1.1em;
+  padding: 0.7em 0;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #5c8c67 0%, #2d543b 100%);
+  color: #fff;
+  border: none;
+  margin-top: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px #2d543b22;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.accommodation-form .cta-button:hover {
+  background: linear-gradient(90deg, #2d543b 0%, #5c8c67 100%);
+  box-shadow: 0 4px 16px #2d543b33;
+}
+.accommodation-form .booking-success-message {
+  display: none;
+  margin-top: 1em;
+  background: #eafaf1;
+  color: #207a2b;
+  border: 1px solid #b7e2c1;
+  border-radius: 6px;
+  padding: 0.75em 1em;
+  font-weight: 600;
+}
+.accommodation-form .booking-success-message[style*="display:block"] {
+  display: block;
+}
+.accommodation-form .booking-form-section {
+  margin-bottom: 1.5em;
+}
+.accommodation-form .multi-activity-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f6fff6;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #2d543b11;
+}
+.accommodation-form .multi-activity-table th,
+.accommodation-form .multi-activity-table td {
+  padding: 0.5em;
+  color: #2d543b;
+}
+.accommodation-form .multi-activity-table thead tr {
+  background: #b7e2c1;
+}
+.accommodation-form .added-sessions-heading {
+  margin-bottom: 0.7em;
+  color: #2d543b;
+}
+.accommodation-form .form-row {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+.accommodation-form .form-row > div {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* --- Accommodation Carousel Styles --- */
+.accommodation-carousel {
+  max-width: 700px;
+  margin: 2.5em auto 2em auto;
+  padding: 0 1em;
+  position: relative;
+}
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.carousel-images {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px #2d543b22;
+  background: #eafaf1;
+  margin: 0 1.5em;
+}
+.carousel-img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 1;
+  pointer-events: none;
+}
+.carousel-img.active {
+  opacity: 1;
+  z-index: 2;
+  pointer-events: auto;
+}
+.carousel-arrow {
+  background: #5c8c67;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px #2d543b22;
+}
+.carousel-arrow:hover {
+  background: #2d543b;
+}
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+  margin-top: 1em;
+}
+.carousel-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #b7e2c1;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px #2d543b11;
+}
+.carousel-indicator.active,
+.carousel-indicator:focus {
+  background: #2d543b;
+  outline: 2px solid #5c8c67;
+}
+@media (max-width: 600px) {
+  .carousel-images { height: 180px; }
+  .accommodation-carousel { max-width: 98vw; }
+}

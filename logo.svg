@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60" role="img" aria-label="Outdoor Living Centre logo">
+  <rect width="200" height="60" fill="none"/>
+  <g fill="none" stroke="#2D543B" stroke-width="3">
+    <path d="M10 50 L40 15 L70 50 Z" fill="#2D543B" />
+    <path d="M60 50 L90 20 L120 50 Z" fill="#9C7D52" />
+  </g>
+</svg>

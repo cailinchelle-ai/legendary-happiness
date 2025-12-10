@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking - Outdoor Living Centre</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1 class="title">Outdoor Living Centre</h1>
+        <nav class="pages">
+            <div class="logo"><a href="index.html" aria-label="Home"><img src="assets/logo.svg" alt="Outdoor Living Centre logo"></a></div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="OLCaccomodations.html">Accommodations</a></li>
+                <li><a href="OLCactivities.html">Activities</a></li>
+                <li><a href="OLCnewsAndEvents.html">News & Events</a></li>
+                <li><a href="OLCcontact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="OLCbooking.html" class="cta-button">Book Now</a>
+    </header>
+
+    <main id="root">
+        <section class="page-header">
+            <h2>Book Your Stay</h2>
+            <p>Select your preferred accommodation and dates to reserve your outdoor activity getaway.</p>
+        </section>
+
+        <section class="booking-form-section">
+            <!-- Multi-activity booking section -->
+            <div id="multiActivitySection" class="accommodation-form">
+                <h3>Book Activities</h3>
+                <form id="multiActivityForm" class="form-row">
+                    <div>
+                        <label for="multiActivityName">Activity:</label>
+                        <select id="multiActivityName" required>
+                            <option value="">Select activity...</option>
+                            <option value="Dirt Bike Trails">Dirt Bike Trails</option>
+                            <option value="Riverside Yoga">Riverside Yoga</option>
+                            <option value="Kayaking on the Lake">Kayaking on the Lake</option>
+                            <option value="Guided Trail Runs">Guided Trail Runs</option>
+                            <option value="Guided Meditation Sessions">Guided Meditation Sessions</option>
+                            <option value="Stand-Up Paddleboarding">Stand-Up Paddleboarding</option>
+                            <option value="Guided Nature Walks">Guided Nature Walks</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="multiActivityTime">Time:</label>
+                        <select id="multiActivityTime" required>
+                            <option value="">Select time...</option>
+                            <option value="Morning">Morning</option>
+                            <option value="Noon">Noon</option>
+                            <option value="Night">Night</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="multiActivityDate">Date:</label>
+                        <input type="date" id="multiActivityDate" required>
+                    </div>
+                    <div>
+                        <label for="multiActivityGuests">Guests:</label>
+                        <input type="number" id="multiActivityGuests" min="1" max="6" value="1" required>
+                    </div>
+                    <button type="submit" class="cta-button">Add Session</button>
+                </form>
+                <div id="multiActivityError"></div>
+                <div id="multiActivityListWrapper" style="margin-top:1em; display:none;">
+                    <h4 class="added-sessions-heading">Added Sessions</h4>
+                    <table id="multiActivityList" class="multi-activity-table">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Time</th>
+                                <th>Date</th>
+                                <th>Guests</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <form class="booking-form accommodation-form" id="bookingForm" action="#" method="POST" aria-labelledby="selectedSummary">
+                <h3>Book Accommodation</h3>
+                <!-- Activity-specific details (shown when coming from activities page) -->
+                <div id="activityDetails" style="display:none; margin-bottom:0.75rem;" aria-hidden="true">
+                    <label id="activityNameLabel">Selected Activity:</label>
+                    <div id="activityName" style="font-weight:600; margin-bottom:0.5rem;">&nbsp;</div>
+
+                    <label for="activityTime" id="activityTimeLabel">Time:</label>
+                    <input type="text" id="activityTime" name="activityTime" readonly aria-labelledby="activityTimeLabel" style="margin-bottom:0.5rem;">
+                    <!-- Inline error for activity time -->
+                    <div id="activityTimeError" class="field-error" aria-live="polite" role="alert" style="margin-bottom:0.5rem;"></div>
+
+                    <label for="activityDate" id="activityDateLabel">Activity Date:</label>
+                    <input type="date" id="activityDate" name="activityDate" aria-labelledby="activityDateLabel" aria-describedby="activityDateError" style="margin-bottom:0.5rem;">
+                    <div id="activityDateError" class="field-error" aria-live="polite" role="alert" style="margin-bottom:0.5rem;"></div>
+                </div>
+
+                <!-- Accommodation wrapper so we can hide it when booking an activity -->
+                <div id="accommodationWrapper">
+                    <label for="accommodation" id="accommodationLabel">Choose Accommodation:</label>
+                    <select id="accommodation" name="accommodation" required aria-required="true" aria-labelledby="accommodationLabel" aria-describedby="accommodationError accommodationHelp" aria-invalid="false">
+                        <option value="cedar">The Cedar Cabin</option>
+                        <option value="safari">The Safari Tent</option>
+                    </select>
+                    <span id="accommodationHelp" class="sr-only">Select your preferred accommodation type.</span>
+                    <div id="accommodationError" class="field-error" aria-live="polite" role="alert"></div>
+                </div>
+
+                <!-- Hidden fields for source info (activity or unit) populated by sessionStorage or query params -->
+                <input type="hidden" id="sourceType" name="sourceType" value="">
+                <input type="hidden" id="sourceValue" name="sourceValue" value="">
+
+                <div class="form-row">
+                    <div>
+                        <label for="checkin" id="checkinLabel">Check-In Date:</label>
+                        <input type="date" id="checkin" name="checkin" required aria-required="true" aria-labelledby="checkinLabel" aria-describedby="checkinError checkinHelp yearRangeHelp" aria-invalid="false">
+                        <span id="checkinHelp" class="sr-only">Enter your arrival date.</span>
+                        <div id="checkinError" class="field-error" aria-live="polite" role="alert"></div>
+                    </div>
+                    <div>
+                        <label for="checkout" id="checkoutLabel">Check-Out Date:</label>
+                        <input type="date" id="checkout" name="checkout" required aria-required="true" aria-labelledby="checkoutLabel" aria-describedby="checkoutError checkoutHelp yearRangeHelp" aria-invalid="false">
+                        <span id="checkoutHelp" class="sr-only">Enter your leaving date.</span>
+                        <div id="checkoutError" class="field-error" aria-live="polite" role="alert"></div>
+                    </div>
+                </div>
+                <div>
+                    <div id="yearError" class="field-error" aria-live="polite" role="alert"></div>
+                    <div id="yearRangeHelp" class="field-help" aria-hidden="false"></div>
+                </div>
+                <div>
+                    <label for="guests" id="guestsLabel">Number of Guests:</label>
+                    <input type="number" id="guests" name="guests" min="1" max="6" required aria-required="true" aria-labelledby="guestsLabel" aria-describedby="guestsError guestsHelp" aria-invalid="false">
+                    <span id="guestsHelp" class="sr-only">Enter the number of guests, between 1 and 6.</span>
+                    <div id="guestsError" class="field-error" aria-live="polite" role="alert"></div>
+                </div>
+                <button type="submit" id="submitBookingBtn" class="cta-button" aria-label="Submit your booking">Submit Booking</button>
+                <div id="bookingSuccess" class="booking-success-message"></div>
+
+            </form>
+        </section>
+    <script>
+        // Show a success message on form submit
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.getElementById('bookingForm');
+            var successDiv = document.getElementById('bookingSuccess');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    successDiv.textContent = 'Booking submitted successfully!';
+                    successDiv.style.display = 'block';
+                    form.reset();
+                });
+            }
+        });
+        // Helpers
+        function formatPrettySelection(booking) {
+            if (!booking) return 'None';
+            if (booking.source === 'accommodation' && booking.unit) {
+                const map = { cedar: 'The Cedar Cabin', safari: 'The Safari Tent' };
+                return map[booking.unit] || booking.unit;
+            }
+            if (booking.source === 'activity' && booking.activity) return booking.activity + (booking.time ? (' — ' + booking.time) : '');
+            return 'None';
+        }
+
+        function toISODate(d) {
+            return d.toISOString().slice(0, 10);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const select = document.getElementById('accommodation');
+            const checkin = document.getElementById('checkin');
+            const checkout = document.getElementById('checkout');
+            const guests = document.getElementById('guests');
+            const selectedText = document.getElementById('selectedText');
+            const dateError = document.getElementById('dateError');
+            const yearError = document.getElementById('yearError');
+            const guestsError = document.getElementById('guestsError');
+            const submitBtn = document.getElementById('submitBookingBtn');
+            const sourceType = document.getElementById('sourceType');
+            const sourceValue = document.getElementById('sourceValue');
+
+            // New activity-related elements
+            const activityDetails = document.getElementById('activityDetails');
+            const activityName = document.getElementById('activityName');
+            const activityTime = document.getElementById('activityTime');
+            const activityDate = document.getElementById('activityDate');
+            const accommodationWrapper = document.getElementById('accommodationWrapper');
+
+            // Multi-activity booking logic
+            const multiForm = document.getElementById('multiActivityForm');
+            const multiName = document.getElementById('multiActivityName');
+            const multiTime = document.getElementById('multiActivityTime');
+            const multiDate = document.getElementById('multiActivityDate');
+            const multiGuests = document.getElementById('multiActivityGuests');
+            const multiError = document.getElementById('multiActivityError');
+            const multiListWrapper = document.getElementById('multiActivityListWrapper');
+            const multiList = document.getElementById('multiActivityList').querySelector('tbody');
+            let multiSessions = [];
+
+            function renderMultiSessions() {
+                multiList.innerHTML = '';
+                if (multiSessions.length === 0) {
+                    multiListWrapper.style.display = 'none';
+                    return;
+                }
+                multiListWrapper.style.display = '';
+                multiSessions.forEach((s, idx) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${s.activity}</td><td>${s.time}</td><td>${s.date}</td><td>${s.guests}</td><td><button type="button" aria-label="Remove session" data-idx="${idx}" style="color:#b00; background:none; border:none; font-size:1.1em;">&times;</button></td>`;
+                    multiList.appendChild(tr);
+                });
+            }
+            multiList.addEventListener('click', function(e) {
+                if (e.target.tagName === 'BUTTON' && e.target.hasAttribute('data-idx')) {
+                    const idx = Number(e.target.getAttribute('data-idx'));
+                    multiSessions.splice(idx, 1);
+                    renderMultiSessions();
+                }
+            });
+            multiForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                multiError.textContent = '';
+                const activity = multiName.value;
+                const time = multiTime.value;
+                const date = multiDate.value;
+                const guests = Number(multiGuests.value);
+                if (!activity || !time || !date || !guests) {
+                    multiError.textContent = 'Please fill in all fields.';
+                    return;
+                }
+                // Prevent duplicate session (same activity, time, date)
+                if (multiSessions.some(s => s.activity === activity && s.time === time && s.date === date)) {
+                    multiError.textContent = 'This session is already added.';
+                    return;
+                }
+                // Year range validation
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const maxYear = currentYear + 2;
+                const d = new Date(date);
+                if (d.getFullYear() < currentYear || d.getFullYear() > maxYear) {
+                    multiError.textContent = `Date must be between ${currentYear} and ${maxYear}.`;
+                    return;
+                }
+                multiSessions.push({ activity, time, date, guests });
+                renderMultiSessions();
+                multiForm.reset();
+            });
+            // On main booking form submit, if multiSessions exist, show a summary dialog and block normal submit
+            const mainForm = document.getElementById('bookingForm');
+            if (mainForm) {
+                mainForm.addEventListener('submit', function(e) {
+                    if (multiSessions.length > 0) {
+                        e.preventDefault();
+                        // Show a summary dialog for multi-activity booking
+                        let summary = '<h3>Confirm Your Activity Sessions</h3>';
+                        summary += '<ul style="padding-left:1.2em;">';
+                        multiSessions.forEach(s => {
+                            summary += `<li><strong>${s.activity}</strong> — ${s.time} on ${s.date} (${s.guests} guest${s.guests>1?'s':''})</li>`;
+                        });
+                        summary += '</ul>';
+                        summary += '<p>Click Confirm to submit all sessions, or Cancel to edit.</p>';
+                        const dlg = document.createElement('dialog');
+                        dlg.innerHTML = summary + '<menu style="display:flex;gap:0.5em;justify-content:flex-end;"><button value="cancel">Cancel</button><button value="confirm">Confirm</button></menu>';
+                        dlg.addEventListener('close', function onClose() {
+                            dlg.removeEventListener('close', onClose);
+                            if (dlg.returnValue === 'confirm') {
+                                // user confirmed: clear sessionStorage and submit form for real
+                                try { sessionStorage.removeItem('bookingData'); } catch (err) { /* ignore */ }
+                                form.submit();
+                            } else {
+                                // cancelled: just close and let user edit form
+                            }
+                        });
+                        document.body.appendChild(dlg);
+                        if (typeof dlg.showModal === 'function') dlg.showModal();
+                        else dlg.setAttribute('open', '');
+                    }
+                });
+            }
+
+            // Read bookingData from sessionStorage (preferred)
+            let booking = null;
+            try {
+                const raw = sessionStorage.getItem('bookingData');
+                if (raw) booking = JSON.parse(raw);
+            } catch (e) {
+                console.warn('Failed to parse bookingData from sessionStorage', e);
+            }
+
+            // Fallback to query params
+            const params = new URLSearchParams(window.location.search);
+            if (!booking) {
+                if (params.has('unit')) booking = { source: 'accommodation', unit: params.get('unit') };
+                else if (params.has('activity')) booking = { source: 'activity', activity: params.get('activity') };
+            }
+
+            // Populate visible summary
+            selectedText.textContent = formatPrettySelection(booking);
+
+            // Populate fields from booking data
+            if (booking) {
+                if (booking.unit) {
+                    const opt = Array.from(select.options).find(o => o.value === booking.unit);
+                    if (opt) select.value = booking.unit;
+                    sourceType.value = 'accommodation';
+                    sourceValue.value = booking.unit || '';
+                }
+                if (booking.activity) {
+                    sourceType.value = 'activity';
+                    sourceValue.value = booking.activity || '';
+
+                    // Show activity UI and hide accommodation selector
+                    if (activityDetails) {
+                        activityDetails.style.display = '';
+                        activityDetails.setAttribute('aria-hidden', 'false');
+                        activityName.textContent = booking.activity || '';
+                        activityTime.value = booking.time || '';
+                        // If an activity provides a single date field, populate activityDate
+                        if (booking.date) activityDate.value = booking.date;
+                    }
+                    if (accommodationWrapper) {
+                        accommodationWrapper.style.display = 'none';
+                        select.removeAttribute('required');
+                        select.disabled = true;
+                    }
+                }
+                if (booking.guests) guests.value = booking.guests;
+                // Support booking objects that provide checkin/checkout (from homepage) or a single 'date' field
+                if (booking.checkin) checkin.value = booking.checkin;
+                if (booking.checkout) checkout.value = booking.checkout;
+                else if (booking.date) checkin.value = booking.date;
+            }
+
+            // If dates aren't set for accommodation, set sensible defaults (tomorrow / tomorrow+1)
+            if (!checkin.value && sourceType.value !== 'activity') {
+                const t = new Date();
+                t.setDate(t.getDate() + 1);
+                checkin.value = toISODate(t);
+            }
+            if (!checkout.value && sourceType.value !== 'activity') {
+                const t2 = new Date(checkin.value);
+                t2.setDate(t2.getDate() + 1);
+                checkout.value = toISODate(t2);
+            }
+
+            // For activity bookings: if no activityDate provided, default to tomorrow
+            if (sourceType.value === 'activity' && activityDate && !activityDate.value) {
+                const t = new Date();
+                t.setDate(t.getDate() + 1);
+                activityDate.value = toISODate(t);
+            }
+
+            // Populate the visible help text for allowed booking years (currentYear..currentYear+2)
+            try {
+                const yearRangeEl = document.getElementById('yearRangeHelp');
+                if (yearRangeEl) {
+                    const now = new Date();
+                    const currentYear = now.getFullYear();
+                    const maxYear = currentYear + 2;
+                    yearRangeEl.textContent = `Booking years allowed: ${currentYear} — ${maxYear}.`;
+                    yearRangeEl.setAttribute('aria-live', 'polite');
+                }
+            } catch (e) {
+                console.warn('Could not set year range help text', e);
+            }
+
+            // Validation
+            function validate() {
+                let ok = true;
+                // Inline error objects
+                const errors = {};
+
+                const isActivity = (sourceType.value === 'activity');
+                if (isActivity) {
+                    if (!activityDate.value) {
+                        errors.activityDateError = 'Please provide a date for the activity.';
+                        ok = false;
+                    } else {
+                        try {
+                            const now = new Date();
+                            const currentYear = now.getFullYear();
+                            const maxYear = currentYear + 2;
+                            const ad = new Date(activityDate.value);
+                            if (!isNaN(ad.getTime())) {
+                                const adYear = ad.getFullYear();
+                                if (adYear < currentYear || adYear > maxYear) {
+                                    errors.yearError = `Activity date year must be between ${currentYear} and ${maxYear}.`;
+                                    ok = false;
+                                }
+                            }
+                        } catch (e) { console.warn('Activity year validation failed', e); }
+                    }
+                } else {
+                    if (!checkin.value) {
+                        errors.checkinError = 'Please provide a check-in date.';
+                        ok = false;
+                    }
+                    if (!checkout.value) {
+                        errors.checkoutError = 'Please provide a check-out date.';
+                        ok = false;
+                    }
+                    if (checkin.value && checkout.value && checkin.value >= checkout.value) {
+                        errors.checkoutError = 'Check-out must be after check-in.';
+                        ok = false;
+                    }
+                    if (checkin.value && checkout.value) {
+                        try {
+                            const msPerDay = 24 * 60 * 60 * 1000;
+                            const diffDays = (new Date(checkout.value) - new Date(checkin.value)) / msPerDay;
+                            const maxDays = 62;
+                            if (diffDays > maxDays) {
+                                errors.checkoutError = 'Booking length must be less than two months.';
+                                ok = false;
+                            }
+                        } catch (e) {
+                            console.warn('Could not validate booking length', e);
+                        }
+                    }
+                    try {
+                        const now = new Date();
+                        const currentYear = now.getFullYear();
+                        const maxYear = currentYear + 2;
+                        const ci = new Date(checkin.value);
+                        const co = new Date(checkout.value);
+                        if (!isNaN(ci.getTime()) && !isNaN(co.getTime())) {
+                            const ciYear = ci.getFullYear();
+                            const coYear = co.getFullYear();
+                            if (ciYear < currentYear || ciYear > maxYear || coYear < currentYear || coYear > maxYear) {
+                                errors.yearError = `Booking year must be between ${currentYear} and ${maxYear}.`;
+                                ok = false;
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Year validation failed', e);
+                    }
+                }
+                const g = Number(guests.value);
+                if (!g || g < 1) {
+                    errors.guestsError = 'Please enter at least 1 guest.';
+                    ok = false;
+                } else if (g > Number(guests.max || 6)) {
+                    errors.guestsError = 'Number of guests exceeds the allowed maximum.';
+                    ok = false;
+                }
+                setInlineErrors(errors);
+                updateAriaInvalid();
+                submitBtn.disabled = !ok;
+                return ok;
+            }
+
+            // Update aria-invalid attributes based on current error text content
+            function updateAriaInvalid() {
+                try {
+                    const dateHasError = Boolean(dateError && dateError.textContent.trim());
+                    const yearHasError = Boolean(yearError && yearError.textContent.trim());
+                    const guestsHasError = Boolean(guestsError && guestsError.textContent.trim());
+
+                    if (sourceType.value === 'activity') {
+                        if (activityDate) activityDate.setAttribute('aria-invalid', (dateHasError || yearHasError) ? 'true' : 'false');
+                        if (checkin) checkin.setAttribute('aria-invalid', 'false');
+                        if (checkout) checkout.setAttribute('aria-invalid', 'false');
+                    } else {
+                        if (checkin) checkin.setAttribute('aria-invalid', (dateHasError || yearHasError) ? 'true' : 'false');
+                        if (checkout) checkout.setAttribute('aria-invalid', (dateHasError || yearHasError) ? 'true' : 'false');
+                    }
+                    if (guests) guests.setAttribute('aria-invalid', guestsHasError ? 'true' : 'false');
+                } catch (e) {
+                    // Non-fatal
+                }
+            }
+
+            // Wire up listeners
+            const inputsToWatch = [checkin, checkout, guests, select, activityDate, activityTime].filter(Boolean);
+            inputsToWatch.forEach(el => el.addEventListener('input', function () {
+                // If checkin changed, ensure checkout is at least +1 day
+                if (this === checkin && checkin.value && (!checkout.value || checkout.value <= checkin.value)) {
+                    const d = new Date(checkin.value);
+                    d.setDate(d.getDate() + 1);
+                    checkout.value = toISODate(d);
+                }
+                selectedText.textContent = formatPrettySelection({
+                    source: sourceType.value || (select && select.value ? 'accommodation' : null),
+                    unit: select ? select.value : null,
+                    activity: sourceValue.value
+                });
+                validate();
+            }));
+
+            // Initial validation run
+            validate();
+
+            // Helper: convert time values to friendly labels
+            function timeLabel(t) {
+                if (!t) return '';
+                const map = {
+                    '09:00': '09:00 (Morning)',
+                    '12:00': '12:00 (Noon)',
+                    '19:00': '19:00 (Night)'
+                };
+                return map[t] || t;
+            }
+
+            // Submit handler: validate and show confirmation dialog before final submit
+            const form = document.querySelector('.booking-form');
+            const dialog = document.createElement('dialog');
+            dialog.id = 'confirmDialog';
+            dialog.setAttribute('aria-labelledby', 'confirmTitle');
+            dialog.setAttribute('role', 'dialog');
+            dialog.setAttribute('aria-modal', 'true');
+            dialog.innerHTML = `
+                <form method="dialog" style="margin:0">
+                    <h3 id="confirmTitle">Confirm your booking</h3>
+                    <p><strong>Selection:</strong> <span id="dlg-selected">${selectedText.textContent}</span></p>
+                    <p><strong>Accommodation:</strong> <span id="dlg-accommodation"></span></p>
+                    <p><strong>Check-in:</strong> <span id="dlg-checkin"></span></p>
+                    <p><strong>Check-out:</strong> <span id="dlg-checkout"></span></p>
+                    <p><strong>Time:</strong> <span id="dlg-time"></span></p>
+                    <p><strong>Guests:</strong> <span id="dlg-guests"></span></p>
+                    <menu style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1rem;">
+                        <button value="cancel" type="submit" class="cancel" aria-label="Cancel and return to form">Cancel</button>
+                        <button value="confirm" type="submit" class="confirm" aria-label="Confirm booking and submit">Confirm</button>
+                    </menu>
+                </form>
+            `;
+            // Basic styles so dialog is visible even without external CSS
+            dialog.style.padding = '1rem';
+            dialog.style.borderRadius = '6px';
+            dialog.style.maxWidth = '520px';
+            dialog.style.width = '90%';
+            document.body.appendChild(dialog);
+
+            form.addEventListener('submit', function (e) {
+                if (!validate()) {
+                    e.preventDefault();
+                    if (dateError.textContent) {
+                        if (sourceType.value === 'activity') document.getElementById('activityDate').focus();
+                        else document.getElementById('checkin').focus();
+                    }
+                    else if (guestsError.textContent) guests.focus();
+                    return;
+                }
+
+                // prevent immediate submit and show confirmation dialog
+                e.preventDefault();
+
+                // populate dialog fields
+                if (sourceType.value === 'activity') {
+                    const friendly = timeLabel(activityTime ? activityTime.value : '');
+                    document.getElementById('dlg-selected').textContent = (selectedText.textContent ? selectedText.textContent + (friendly ? ' — ' + friendly : '') : 'None');
+                    document.getElementById('dlg-accommodation').textContent = 'N/A (activity booking)';
+                    document.getElementById('dlg-checkin').textContent = activityDate ? activityDate.value : '';
+                    document.getElementById('dlg-checkout').textContent = '';
+                    document.getElementById('dlg-time').textContent = friendly;
+                } else {
+                    document.getElementById('dlg-selected').textContent = selectedText.textContent || 'None';
+                    document.getElementById('dlg-accommodation').textContent = select.options[select.selectedIndex].text;
+                    document.getElementById('dlg-checkin').textContent = checkin.value;
+                    document.getElementById('dlg-checkout').textContent = checkout.value;
+                    document.getElementById('dlg-time').textContent = 'N/A';
+                }
+                document.getElementById('dlg-guests').textContent = guests.value;
+
+                // show modal (use showModal if available)
+                if (typeof dialog.showModal === 'function') dialog.showModal();
+                else dialog.setAttribute('open', '');
+
+                // handle dialog close values
+                dialog.addEventListener('close', function onClose() {
+                    // remove the listener to avoid duplicates on subsequent opens
+                    dialog.removeEventListener('close', onClose);
+                    const returnValue = dialog.returnValue;
+                    if (returnValue === 'confirm') {
+                        // user confirmed: clear sessionStorage and submit form for real
+                        try { sessionStorage.removeItem('bookingData'); } catch (err) { /* ignore */ }
+                        form.submit();
+                    } else {
+                        // cancelled: just close and let user edit form
+                    }
+                });
+            });
+        });
+        </script>
+
+            <!-- Load automated test script only if test flag is set -->
+            <script>
+                if (window.__OLC_AUTOMATED_TEST) {
+                    var s = document.createElement('script');
+                    s.src = 'assets/bookingTest.js';
+                    document.body.appendChild(s);
+                }
+            </script>
+</body>
+</html>

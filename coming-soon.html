@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon | Outdoor Living Centre</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .coming-soon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .coming-soon-container h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2D543B;
+        }
+
+        .coming-soon-container p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .coming-soon-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background-color: #5C8C67;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .back-link:hover {
+            background-color: #2D543B;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="title">Outdoor Living Centre</h1>
+        <nav class="pages">
+            <div class="logo"><a href="index.html" aria-label="Home"><img src="assets/logo.svg" alt="Outdoor Living Centre logo"></a></div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="OLCaccomodations.html">Accommodations</a></li>
+                <li><a href="OLCactivities.html">Activities</a></li>
+                <li><a href="OLCnewsAndEvents.html">News & Events</a></li>
+                <li><a href="OLCcontact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="OLCbooking.html" class="cta-button">Book Now</a>
+    </header>
+
+    <main id="root">
+        <section class="page-header">
+            <h2>Coming Soon</h2>
+            <p>Exciting updates on the way!</p>
+        </section>
+
+        <div class="coming-soon-container">
+            <div class="coming-soon-icon">🌿</div>
+            <h2>Stay Tuned</h2>
+            <p>We're working on bringing you fresh content, exciting news, and special announcements. Check back soon for updates about events and promotions at the Outdoor Living Centre.</p>
+            <a href="OLCnewsAndEvents.html" class="back-link">Back to News & Events</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Outdoor Living Centre. All rights reserved.</p>
+    </footer>
+</body>
+</html>

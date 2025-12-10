@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accommodations | Outdoor Living Centre</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header> <!-- consistent header across all pages -->
+        <h1 class="title">Outdoor Living Centre</h1>
+        <nav class="pages">
+            <div class="logo"><a href="index.html" aria-label="Home"><img src="assets/logo.svg" alt="Outdoor Living Centre logo"></a></div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="OLCaccomodations.html">Accommodations</a></li>
+                <li><a href="OLCactivities.html">Activities</a></li>
+                <li><a href="OLCnewsAndEvents.html">News & Events</a></li>
+                <li><a href="OLCcontact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="OLCbooking.html" class="cta-button">Book Now</a>
+    </header>
+
+    <main id="root">
+        <!-- Accommodation Photo Carousel -->
+        <section class="accommodation-carousel" aria-label="Accommodation Photo Carousel">
+            <div class="carousel-wrapper">
+                <button class="carousel-arrow left" aria-label="Previous photo">&#8592;</button>
+                <div class="carousel-images">
+                    <img src="assets/cabin.jpg" alt="Cedar Cabin exterior" class="carousel-img active" />
+                    <img src="assets/tent.jpg" alt="Luxury Safari Tent exterior" class="carousel-img" />
+                    <img src="assets/treehouse.jpg" alt="Round Treehouse among trees" class="carousel-img" />
+                </div>
+                <button class="carousel-arrow right" aria-label="Next photo">&#8594;</button>
+            </div>
+            <div class="carousel-indicators" role="tablist">
+                <button class="carousel-indicator active" aria-label="Show Cedar Cabin photo" aria-selected="true" tabindex="0"></button>
+                <button class="carousel-indicator" aria-label="Show Safari Tent photo" aria-selected="false" tabindex="-1"></button>
+                <button class="carousel-indicator" aria-label="Show Treehouse photo" aria-selected="false" tabindex="-1"></button>
+            </div>
+        </section>
+
+        <section class="page-header">
+            <h2>Luxury Glamping Units</h2>
+            <p>Choose from our selection of unique and tranquil accommodations designed for the ultimate serene wildlife escape.</p>
+        </section>
+
+        <section class="accommodation-grid">
+            <div class="card accommodation-card">
+                <img src="assets/cabin.jpg" alt="Photo of Cedar Cabin">
+                <div class="card-content">
+                    <h3>The Cedar Cabin</h3>
+                    <p>A private, modern cabin featuring a king bed, fireplace, and a private hot tub on the deck.</p>
+                    <p class="price">Starting at <i>£250 / Night</i></p>
+                    <div class="availability-badge" data-availability="available" role="status" aria-live="polite">Available</div>
+                    <a href="OLCbooking.html?unit=cedar" class="cta-button" onclick="setBookingUnit(event,'cedar')" aria-label="Check availability and book The Cedar Cabin">Book now</a>
+                </div>
+            </div>
+
+            <div class="card accommodation-card">
+                <img src="assets/tent.jpg" alt="Photo of Luxury Safari Tent">
+                <div class="card-content">
+                    <h3>The Safari Tent</h3>
+                    <p>Experience glamping in style with a queen bed, en-suite bath, and stunning views of the valley.</p>
+                    <p class="price">Starting at <i>£180 / Night</i></p>
+                    <div class="availability-badge" data-availability="unavailable" role="status" aria-live="polite">Unavailable</div>
+                    <a href="OLCbooking.html?unit=safari" class="cta-button" onclick="setBookingUnit(event,'safari')" aria-label="Check availability and book The Safari Tent">Book now</a>
+                </div>
+            </div>
+
+            <div class="card accommodation-card">
+                <img src="assets/treehouse.jpg" alt="Photo of a round treehouse">
+                <div class="card-content">
+                    <h3>The Treehouse</h3>
+                    <p>A treehouse nestled among the trees, featuring a queen bed, private balcony, and stunning views.</p>
+                    <p class="price">Starting at <i>£300 / Night</i></p>
+                    <div class="availability-badge" data-availability="limited" role="status" aria-live="polite">Limited</div>
+                    <a href="OLCbooking.html?unit=treehouse" class="cta-button" onclick="setBookingUnit(event,'treehouse')" aria-label="Check availability and book The Treehouse">Book now</a>
+                </div>
+
+            </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Outdoor Living Centre. All rights reserved.</p>
+    </footer>
+    <script>
+        // Set the selected accommodation unit into sessionStorage and navigate to booking page.
+        function setBookingUnit(e, unit) {
+            if (e && e.preventDefault) e.preventDefault();
+            const bookingData = {
+                source: 'accommodation',
+                unit: unit,
+                guests: 1
+            };
+            try {
+                sessionStorage.setItem('bookingData', JSON.stringify(bookingData));
+            } catch (err) {
+                console.error('sessionStorage set failed', err);
+            }
+            // Navigate to booking page without query string (booking page will read sessionStorage)
+            window.location.href = 'OLCbooking.html';
+        }
+    </script>
+    <script>
+        // Disable buttons for unavailable accommodations
+        document.addEventListener('DOMContentLoaded', function () {
+            var cards = document.querySelectorAll('.accommodation-card');
+            cards.forEach(function(card) {
+                var badge = card.querySelector('.availability-badge');
+                var button = card.querySelector('.cta-button');
+                if (badge && button) {
+                    var availability = badge.getAttribute('data-availability');
+                    if (availability === 'unavailable') {
+                        button.setAttribute('disabled', 'disabled');
+                        button.classList.add('unavailable');
+                        button.removeAttribute('href');
+                        button.removeAttribute('onclick');
+                        button.style.cursor = 'not-allowed';
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        // Render availability badges from data-availability attributes (keeps markup flexible)
+        (function() {
+            document.addEventListener('DOMContentLoaded', function () {
+                var badges = document.querySelectorAll('.availability-badge');
+                badges.forEach(function(b) {
+                    var status = (b.getAttribute('data-availability') || 'unknown').toLowerCase();
+                    // accept 'available', 'limited', 'booked' and 'unavailable'
+                    b.classList.add(status in {available:1, limited:1, booked:1, unavailable:1} ? status : 'unknown');
+                    // ensure readable text
+                    if (!b.textContent || !b.textContent.trim()) {
+                        if (status === 'available') b.textContent = 'Available';
+                        else if (status === 'limited') b.textContent = 'Limited';
+                        else if (status === 'booked') b.textContent = 'Booked';
+                        else if (status === 'unavailable') b.textContent = 'Unavailable';
+                        else b.textContent = 'Availability unknown';
+                    }
+                });
+            });
+        })();
+    </script>
+    <script>
+        // Carousel logic
+        document.addEventListener('DOMContentLoaded', function () {
+            var imgs = document.querySelectorAll('.carousel-img');
+            var indicators = document.querySelectorAll('.carousel-indicator');
+            var left = document.querySelector('.carousel-arrow.left');
+            var right = document.querySelector('.carousel-arrow.right');
+            var current = 0;
+            function show(idx) {
+                imgs.forEach((img, i) => {
+                    img.classList.toggle('active', i === idx);
+                    img.setAttribute('aria-hidden', i !== idx);
+                });
+                indicators.forEach((ind, i) => {
+                    ind.classList.toggle('active', i === idx);
+                    ind.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+                    ind.setAttribute('tabindex', i === idx ? '0' : '-1');
+                });
+                current = idx;
+            }
+            left.addEventListener('click', function() {
+                show((current - 1 + imgs.length) % imgs.length);
+            });
+            right.addEventListener('click', function() {
+                show((current + 1) % imgs.length);
+            });
+            indicators.forEach((ind, i) => {
+                ind.addEventListener('click', function() { show(i); });
+            });
+            show(0);
+        });
+    </script>
+    <script src="assets/bundle.js"></script>
+        <script>
+                    if (window.__OLC_AUTOMATED_TEST && window.__OLC_AUTOMATED_TEST_PAGE === 'accomodations') {
+                        var s = document.createElement('script'); s.src = 'assets/accomodationsTest.js'; document.body.appendChild(s);
+                    }
+        </script>
+</body>
+</html>

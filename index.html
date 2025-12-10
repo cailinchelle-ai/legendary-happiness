@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outdoor Living Centre | Luxury Glamping & Nature Pursuits</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1 class="title">Outdoor Living Centre</h1>
+        
+        <nav class="pages">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="OLCaccomodations.html">Accommodations</a></li>
+                <li><a href="OLCactivities.html">Activities</a></li>
+                <li><a href="OLCnewsAndEvents.html">News & Events</a></li>
+                <li><a href="OLCcontact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="OLCbooking.html" class="cta-button">Book Now</a>
+    </header>
+
+    <main id="root">
+        <section class="hero-split" role="region" aria-label="Hero">
+            <div class="hero-left">
+                <div class="logo"><a href="index.html" aria-label="Home"><img src="assets/logo.svg" alt="Outdoor Living Centre logo"></a></div>
+                <h2>A Serene Escape: Luxury Glamping and Nature Pursuits</h2>
+                <p>The Outdoor Living Centre is a bespoke, decadent, glamping resort located on the East Coast of Northern Ireland. We offer a range of unique accommodations and outdoor activities designed to immerse you in the wild and the wonderful sides of nature while providing all the comforts of modern living.</p>
+                <p>Check out our availability!</p>
+                <form class="booking-search" id="homeBookingForm" aria-label="Quick booking search">
+                    <label for="home-checkin" class="sr-only">Check-in date</label>
+                    <input id="home-checkin" name="home-checkin" type="date">
+
+                    <label for="home-checkout" class="sr-only">Check-out date</label>
+                    <input id="home-checkout" name="home-checkout" type="date">
+
+                    <label for="home-guests" class="sr-only">Number of guests</label>
+                    <input id="home-guests" name="home-guests" type="number" min="1" value="1">
+
+                    <button type="submit" class="cta-button">Search</button>
+                    <div id="homeDateError" class="booking-error-message" role="alert" aria-live="polite" style="display:none; margin-top:0.5rem;"></div>
+                    <div id="homeGuestsError" class="booking-error-message" role="alert" aria-live="polite" style="display:none; margin-top:0.5rem;"></div>
+                </form>
+            </div>
+            <div class="hero-right" aria-hidden="true">
+                <!-- Responsive image fallback for small screens -->
+                <img class="hero-fallback" src="assets/background-landscape.png" alt="A serene landscape with lush greenery and a clear sky" loading="lazy" />
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Outdoor Living Centre. All rights reserved.</p>
+    </footer>
+
+    <script src="assets/bundle.js"></script>
+        <script>
+                if (window.__OLC_AUTOMATED_TEST && window.__OLC_AUTOMATED_TEST_PAGE === 'home') {
+                var s = document.createElement('script'); s.src = 'assets/homeTest.js'; document.body.appendChild(s);
+            }
+        </script>
+
+        <script>
+            // Homepage quick-booking: validate inputs, save bookingData to sessionStorage, and go to booking page
+            (function () {
+                var form = document.getElementById('homeBookingForm');
+                var checkin = document.getElementById('home-checkin');
+                var checkout = document.getElementById('home-checkout');
+                var guests = document.getElementById('home-guests');
+                var dateErr = document.getElementById('homeDateError');
+                var guestsErr = document.getElementById('homeGuestsError');
+                if (!form) return;
+
+                function clearErrors() {
+                    if (dateErr) { dateErr.textContent = ''; dateErr.style.display = 'none'; }
+                    if (guestsErr) { guestsErr.textContent = ''; guestsErr.style.display = 'none'; }
+                    [checkin, checkout, guests].forEach(function (el) { if (el) el.removeAttribute('aria-invalid'); });
+                }
+
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    clearErrors();
+
+                    var ci = checkin ? checkin.value : '';
+                    var co = checkout ? checkout.value : '';
+                    var g = guests ? guests.value : '';
+                    var firstInvalid = null;
+
+                    // Validate check-in and check-out presence
+                    if (!ci) {
+                        if (dateErr) { dateErr.textContent = 'Please select a check-in date.'; dateErr.style.display = 'block'; }
+                        if (checkin) checkin.setAttribute('aria-invalid', 'true');
+                        firstInvalid = firstInvalid || checkin;
+                    }
+                    if (!co) {
+                        if (dateErr) {
+                            dateErr.textContent = dateErr.textContent ? dateErr.textContent + ' Please also select a check-out date.' : 'Please select a check-out date.';
+                            dateErr.style.display = 'block';
+                        }
+                        if (checkout) checkout.setAttribute('aria-invalid', 'true');
+                        firstInvalid = firstInvalid || checkout;
+                    }
+
+                    // If both present, ensure checkout is after checkin
+                    if (ci && co && ci >= co) {
+                        if (dateErr) { dateErr.textContent = 'Check-out must be after check-in.'; dateErr.style.display = 'block'; }
+                        if (checkin) checkin.setAttribute('aria-invalid', 'true');
+                        if (checkout) checkout.setAttribute('aria-invalid', 'true');
+                        firstInvalid = firstInvalid || checkin;
+                    }
+
+                    // Enforce maximum booking length (~2 months). Use 62 days as an approximate limit.
+                    if (ci && co && !(ci >= co)) {
+                        try {
+                            var msPerDay = 24 * 60 * 60 * 1000;
+                            var diffDays = (new Date(co) - new Date(ci)) / msPerDay;
+                            var maxDays = 62; // ~2 months
+                            if (diffDays > maxDays) {
+                                if (dateErr) { dateErr.textContent = 'Booking length must be less than two months.'; dateErr.style.display = 'block'; }
+                                if (checkin) checkin.setAttribute('aria-invalid', 'true');
+                                if (checkout) checkout.setAttribute('aria-invalid', 'true');
+                                firstInvalid = firstInvalid || checkin;
+                            }
+                        } catch (e) {
+                            console.warn('Could not validate booking length', e);
+                        }
+                    }
+
+                    // Validate guests (1-6)
+                    var gi = parseInt(g, 10);
+                    if (isNaN(gi) || gi < 1 || gi > 6) {
+                        if (guestsErr) { guestsErr.textContent = 'Number of guests must be between 1 and 6.'; guestsErr.style.display = 'block'; }
+                        if (guests) guests.setAttribute('aria-invalid', 'true');
+                        firstInvalid = firstInvalid || guests;
+                    }
+
+                    if (firstInvalid) {
+                        try { firstInvalid.focus(); } catch (e) { /* focus best-effort */ }
+                        return;
+                    }
+
+                    var booking = {
+                        source: 'accommodation',
+                        checkin: ci,
+                        checkout: co,
+                        guests: String(gi || 1)
+                    };
+
+                    try {
+                        sessionStorage.setItem('bookingData', JSON.stringify(booking));
+                    } catch (errStorage) {
+                        console.warn('Could not save bookingData to sessionStorage', errStorage);
+                    }
+
+                    // Navigate to booking page which will prefill from sessionStorage
+                    window.location.href = 'OLCbooking.html';
+                });
+            })();
+        </script>
+
+</body>
+</html>
